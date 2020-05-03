@@ -13,14 +13,22 @@ use ReflectionParameter;
 class Container
 {
     /**
+     * @var Container|null
+     */
+    private static ?Container $uniqueInstance = null;
+    /**
      * @var mixed[]
      */
     private array $bindings = [];
-
     /**
      * @var mixed[]
      */
     private array $singletons = [];
+
+    public static function getInstance(): Container
+    {
+        return self::$uniqueInstance ?? new self;
+    }
 
     /**
      * @param string $id
@@ -39,7 +47,7 @@ class Container
                 return $this->resolveClosure($binding);
             }
 
-            return  $binding;
+            return $binding;
         }
 
         if (!class_exists($id)) {
@@ -49,6 +57,62 @@ class Container
         }
 
         return $this->resolveMethod($id, '__construct');
+    }
+
+    private function singletonBound(string $id): bool
+    {
+        return array_key_exists($id, $this->singletons);
+    }
+
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function bound(string $id): bool
+    {
+        return array_key_exists($id, $this->bindings);
+    }
+
+    /**
+     * @param Closure $closure
+     * @return mixed
+     */
+    public function resolveClosure(Closure $closure)
+    {
+        return call_user_func_array($closure, $this->makeMethodArguments(
+            new ReflectionFunction($closure)
+        ));
+    }
+
+    /**
+     * @param ReflectionFunctionAbstract $function
+     * @return mixed[]
+     */
+    private function makeMethodArguments(?ReflectionFunctionAbstract $function): array
+    {
+        if ($function === null) {
+            return [];
+        }
+
+        return array_map(function (ReflectionParameter $parameter) use ($function) {
+            if ($parameter->getClass() !== null) {
+                return $this->resolve($parameter->getClass()->getName());
+            }
+
+            if ($parameter->isDefaultValueAvailable()) {
+                return $parameter->getDefaultValue();
+            }
+
+            if ($parameter->allowsNull()) {
+                return null;
+            }
+
+            throw new DependencyInjectionException(
+                'Can not autowire parameter %s in %s',
+                $parameter->getName(),
+                $function->getName()
+            );
+        }, $function->getParameters());
     }
 
     /**
@@ -87,63 +151,7 @@ class Container
         return $this;
     }
 
-    /**
-     * @param Closure $closure
-     * @return mixed
-     */
-    public function resolveClosure(Closure $closure)
-    {
-        return call_user_func_array($closure, $this->makeMethodArguments(
-            new ReflectionFunction($closure)
-        ));
-    }
-
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function bound(string $id): bool
-    {
-        return array_key_exists($id, $this->bindings);
-    }
-
-    /**
-     * @param ReflectionFunctionAbstract $function
-     * @return mixed[]
-     */
-    private function makeMethodArguments(?ReflectionFunctionAbstract $function): array
-    {
-        if ($function === null) {
-            return [];
-        }
-
-        return array_map(function (ReflectionParameter $parameter) use ($function) {
-            if ($parameter->getClass() !== null) {
-                return $this->resolve($parameter->getClass()->getName());
-            }
-
-            if ($parameter->isDefaultValueAvailable()) {
-                return $parameter->getDefaultValue();
-            }
-
-            if ($parameter->allowsNull()) {
-                return null;
-            }
-
-            throw new DependencyInjectionException(
-                'Can not autowire parameter %s in %s',
-                $parameter->getName(),
-                $function->getName()
-            );
-        }, $function->getParameters());
-    }
-
-    private function singletonBound(string $id)
-    {
-        return array_key_exists($id, $this->singletons);
-    }
-
-    public function singleton(string $class, Closure $resolver)
+    public function singleton(string $class, Closure $resolver): self
     {
         $this->singletons[$class] = $this->resolveClosure($resolver);
 

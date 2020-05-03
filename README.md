@@ -32,7 +32,7 @@ $container->bind(Crawler::class, function () {
     return new Crawler('f4dg65gd6fg465g');
 });
 ```
-Every time you ask for a `Crawler::class`, this closure will be executed and a fresh instance of crawler will be created.
+Every time you ask for a `Crawler::class`, this closure will be executed and a fresh instance of `Crawler` will be created.
 To avoid that, you can use the `singleton` method.
 
 ```php
