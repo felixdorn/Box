@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://github.com/delightphp/box">
+    <a href="https://github.com/felixdorn/box">
         <img src="https://res.cloudinary.com/dy3jxhiba/image/upload/v1588493084/logo_rx8y5s.svg" width="150" alt="">
     </a>
     <h1 align="center">
