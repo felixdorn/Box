@@ -32,9 +32,10 @@ class Container
 
     /**
      * @param string $id
+     * @param mixed[] $with
      * @return mixed|object
      */
-    public function resolve(string $id)
+    public function resolve(string $id, array $with = [])
     {
         if ($this->singletonBound($id)) {
             return $this->singletons[$id];
@@ -44,7 +45,7 @@ class Container
             $binding = $this->bindings[$id];
 
             if ($binding instanceof Closure) {
-                return $this->resolveClosure($binding);
+                return $this->resolveClosure($binding, $with);
             }
 
             return $binding;
@@ -56,7 +57,7 @@ class Container
             );
         }
 
-        return $this->resolveMethod($id, '__construct');
+        return $this->resolveMethod($id, '__construct', $with);
     }
 
     private function singletonBound(string $id): bool
@@ -75,32 +76,39 @@ class Container
 
     /**
      * @param Closure $closure
+     * @param mixed[] $with
      * @return mixed
      */
-    public function resolveClosure(Closure $closure)
+    public function resolveClosure(Closure $closure, array $with = [])
     {
         return call_user_func_array($closure, $this->makeMethodArguments(
-            new ReflectionFunction($closure)
+            new ReflectionFunction($closure),
+            $with
         ));
     }
 
     /**
      * @param ReflectionFunctionAbstract $function
+     * @param mixed[] $with
      * @return mixed[]
      */
-    private function makeMethodArguments(?ReflectionFunctionAbstract $function): array
+    private function makeMethodArguments(?ReflectionFunctionAbstract $function, array $with = []): array
     {
         if ($function === null) {
             return [];
         }
 
-        return array_map(function (ReflectionParameter $parameter) use ($function) {
+        return array_map(function (ReflectionParameter $parameter) use ($function, $with) {
             if ($parameter->getClass() !== null) {
                 return $this->resolve($parameter->getClass()->getName());
             }
 
             if ($parameter->isDefaultValueAvailable()) {
                 return $parameter->getDefaultValue();
+            }
+
+            if (in_array($parameter->getName(), $with)) {
+                return $with[$parameter->getName()];
             }
 
             if ($parameter->allowsNull()) {
@@ -116,11 +124,12 @@ class Container
     }
 
     /**
-     * @param class-string $class
+     * @param string $class
      * @param string $method
+     * @param mixed[] $with
      * @return mixed|object
      */
-    public function resolveMethod(string $class, string $method)
+    public function resolveMethod(string $class, string $method, array $with = [])
     {
         $ref = new ReflectionClass($class);
 
@@ -130,13 +139,13 @@ class Container
 
         if ($method === '__construct') {
             return $ref->newInstanceArgs(
-                $this->makeMethodArguments($ref->getConstructor())
+                $this->makeMethodArguments($ref->getConstructor(), $with),
             );
         }
 
         return $ref->getMethod($method)->invokeArgs(
             $this->resolve($class),
-            $this->makeMethodArguments($ref->getMethod($method))
+            $this->makeMethodArguments($ref->getMethod($method), $with)
         );
     }
 

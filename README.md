@@ -113,21 +113,23 @@ $container->resolveClosure(function (SomeClass $class) {
 ### Resolving an object property
 This feature is currently WIP and not implemented yet.
 
-### Resolving a function
-This feature can be achievable using the private API of the Container. However, not sure if this should be in the Public API. YAGNI!
-
 ###  Setters injections
 This feature is currently WIP and not implemented yet.
 
 ### Resolve with arbitrary parameters
-This feature is currently WIP and not implemented yet.
+```php
+use Delight\Box\Tests\_UnresolvableParameters;
+
+$container->resolve(_UnresolvableParameters::class, [
+    'lamatitude' => 15
+]); // returns an instance of "_UnresolvableParameters" 
+```
 
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
 
 ## Credits
 * [Félix Dorn](https://felixdorn.fr)
-
 
 ## Licensing
 Copyright 2020 Félix Dorn
