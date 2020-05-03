@@ -23,5 +23,8 @@
     },
     "autoload-dev": {
         "classmap": ["tests/"]
+    },
+    "require": {
+        "psr/container": "^1.0"
     }
 }

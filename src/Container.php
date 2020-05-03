@@ -5,13 +5,15 @@ namespace Delight\Box;
 use Closure;
 use Delight\Box\Exceptions\DependencyInjectionException;
 use InvalidArgumentException;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionFunction;
 use ReflectionFunctionAbstract;
 use ReflectionParameter;
 
-class Container
+class Container implements ContainerInterface
 {
+    use Psr11;
     /**
      * @var Container|null
      */

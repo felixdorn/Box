@@ -3,9 +3,10 @@
 namespace Delight\Box\Exceptions;
 
 use Exception;
+use Psr\Container\ContainerExceptionInterface;
 use Throwable;
 
-class DependencyInjectionException extends Exception
+class DependencyInjectionException extends Exception implements ContainerExceptionInterface
 {
     /**
      * DependencyInjectionException constructor.
