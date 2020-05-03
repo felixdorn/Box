@@ -8,6 +8,7 @@
     <p align="center">
         <img src="https://github.com/felixdorn/box/workflows/CI/badge.svg?branch=master" alt="CI" />
         <img src="https://github.styleci.io/repos/260858314/shield?branch=master&style=flat" alt="Style CI" />
+        <img alt="Codecov" src="https://img.shields.io/codecov/c/github/felixdorn/box">
         <img src="https://img.shields.io/packagist/l/delights/box" alt="License" />
         <img src="https://img.shields.io/packagist/v/delights/box" alt="Last Version" />
     </p>
