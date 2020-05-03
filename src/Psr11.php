@@ -3,7 +3,6 @@
 
 namespace Delight\Box;
 
-
 trait Psr11
 {
     public function get($id)
