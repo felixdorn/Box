@@ -61,16 +61,66 @@ $container->singleton(Connection::class, function () {
 Now, the `Connection` class will be instantiated once, and the closure never executed again. 
 
 ## Resolving
+Smartly resolving parameters is the primary goal of this package. You can resolve anything that needs parameter including, constructors, closures, methods, functions.
+We even support resolving properties if there is an annotation .
 
-## Autowiring
+### Autowiring
+Autowiring allows the container to auto-magically resolve dependencies using the Reflection API.
 
-## Resolving a method
+```php
+use Delight\Box\Container;
+$container = new Container();
 
-## Resolving a Closure
+class SomeClass {}
+$container->resolve(SomeClass::class); // returns an instance of "SomeClass" 
 
-## Resolving a method
+class SomeOtherClass {
+    public function __construct(SomeClass $dep) {
+        $this->dep = $dep;
+    }
+}
+$container->resolve(SomeOtherClass::class); 
+// returns an instance of "SomeOtherClass"
+// with $this->dep set to an instance of "SomeClass"
+```
+
+The container can resolve non-typed argument but only in two cases : they should either allow null or have a default value.
+
+### Resolving an object method
+```php
+class PostsRepository {
+    public function all() {
+        return ['My article'];    
+    }
+}
+
+class PostController {
+    public function index(PostsRepository $repository) {
+        return $repository->all();    
+    }
+}
+
+$container->resolveMethod(PostController::class, 'index');
+// This returns |'My article']
+```
+### Resolving a Closure
+```php
+$container->resolveClosure(function (SomeClass $class) {
+    return $class instanceof SomeClass;
+}); // returns true
+```
+
+### Resolving an object property
+This feature is currently WIP and not implemented yet.
+
+### Resolving a function
+This feature can be achievable using the private API of the Container. However, not sure if this should be in the Public API. YAGNI!
+
+###  Setters injections
+This feature is currently WIP and not implemented yet.
 
 ### Resolve with arbitrary parameters
+This feature is currently WIP and not implemented yet.
 
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
