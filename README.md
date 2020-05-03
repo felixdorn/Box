@@ -11,7 +11,36 @@
     </p>
 </p>
 
-See the [documentation](docs/README.md).
+## Getting started
+Before diving into the autowiring and stuff, we need to create a container instance.
+```php
+use Delight\Box\Container;
+
+$container = new Container();
+```
+
+## Bindings
+You can bind something into the container, it works just like a key => value array.
+```php
+$container->bind('key', 'value');
+echo $container->resolve('key'); // prints "value"
+```
+
+You may want to bind a class in a closure if you need more specific arguments,
+```php
+$container->bind(Crawler::class, function () {
+    return new Crawler('f4dg65gd6fg465g');
+});
+```
+Every time you ask for a `Crawler::class`, this closure will be executed and a fresh instance of crawler will be created.
+To avoid that, you can use the `singleton` method.
+
+```php
+$container->singleton(Connection::class, function () {
+    return new Connection();
+});
+```
+Now, the `Connection` class will be instantiated once, and the closure never executed again. 
 
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
