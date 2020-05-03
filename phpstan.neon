@@ -1,0 +1,8 @@
+parameters:
+  level: 8
+  paths:
+    - src/
+  excludes_analyse:
+    - tests/
+  checkGenericClassInNonGenericObjectType: false
+  inferPrivatePropertyTypeFromConstructor: true
