@@ -1,0 +1,18 @@
+{
+  "commit": {
+    "message": ":bookmark: release {version}",
+    "empty": false,
+    "stageAll": true
+  },
+  "push": {
+    "remote": "origin",
+    "arguments": ""
+  },
+  "tag": {
+    "name": "{version}",
+    "message": "Release {version}"
+  },
+  "hooks": {
+    "beforeRelease": "make ci"
+  }
+}

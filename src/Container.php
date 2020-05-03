@@ -124,7 +124,7 @@ class Container
     }
 
     /**
-     * @param string $class
+     * @param class-string $class
      * @param string $method
      * @param mixed[] $with
      * @return mixed|object
