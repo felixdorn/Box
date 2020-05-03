@@ -110,12 +110,6 @@ $container->resolveClosure(function (SomeClass $class) {
 }); // returns true
 ```
 
-### Resolving an object property
-This feature is currently WIP and not implemented yet.
-
-###  Setters injections
-This feature is currently WIP and not implemented yet.
-
 ### Resolve with arbitrary parameters
 ```php
 class Vec2 {
