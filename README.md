@@ -118,12 +118,24 @@ This feature is currently WIP and not implemented yet.
 
 ### Resolve with arbitrary parameters
 ```php
-use Delight\Box\Tests\_UnresolvableParameters;
+class Vec2 {
+    protected int $x;
+    protected int $y;
 
-$container->resolve(_UnresolvableParameters::class, [
-    'lamatitude' => 15
-]); // returns an instance of "_UnresolvableParameters" 
+    public function __construct(int $x, int $y) {
+        $this->x = $x;
+        $this->y = $y;
+    }
+}
+$container->resolve(Vec2::class, [
+    'x' => 2,
+    'y' => 4
+]); // returns an instance of "Vec2" 
 ```
+
+The order does not matter, in our example, it can be either `[x, y]` or `[y, x]`.
+
+You can pass arbitrary parameters to any resolve function.
 
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
