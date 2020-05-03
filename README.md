@@ -12,6 +12,24 @@
 </p>
 
 ## Getting started
+
+### Installation
+This library can be installed using composer, if you don't have it already, [download it](https://getcomposer.org/download).
+
+You can either run this command :
+```bash
+composer require delights/box
+```
+Or by adding a requirement in your `composer.json` :
+```json
+{
+  "require": {
+    "delight/box": "1.0.1"  
+  }
+}
+```
+Don't forget to run `composer install` after adding the requirement.
+
 Before diving into the autowiring and stuff, we need to create a container instance.
 ```php
 use Delight\Box\Container;
@@ -41,6 +59,18 @@ $container->singleton(Connection::class, function () {
 });
 ```
 Now, the `Connection` class will be instantiated once, and the closure never executed again. 
+
+## Resolving
+
+## Autowiring
+
+## Resolving a method
+
+## Resolving a Closure
+
+## Resolving a method
+
+### Resolve with arbitrary parameters
 
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
