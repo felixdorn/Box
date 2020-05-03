@@ -6,7 +6,7 @@
         Box, a smart autowiring container for PHP.
     </h1>
     <p align="center">
-        <img src="https://img.shields.io/packagist/l/delight/box" alt="License" />
+        <img src="https://img.shields.io/packagist/l/delights/box" alt="License" />
         <img src="https://img.shields.io/packagist/v/delights/box" alt="Last Version" />
     </p>
 </p>
