@@ -92,14 +92,16 @@ class ContainerTest extends TestCase
         $container->resolve(_UnresolvableParameters::class);
     }
 
-    public function test_it_throws_an_exception_when_encountering_unexisting_class() {
+    public function test_it_throws_an_exception_when_encountering_unexisting_class()
+    {
         $container = new Container();
 
         $this->expectException(\InvalidArgumentException::class);
         $container->resolve(_NotExisting::class);
     }
 
-    public function test_it_can_resolve_closures() {
+    public function test_it_can_resolve_closures()
+    {
         $container = new Container();
 
         $resolved = $container->resolveClosure(function (_NoDependencies $noDep, _ResolvableDependencies $resDep) {
@@ -107,6 +109,34 @@ class ContainerTest extends TestCase
         });
 
         $this->assertEquals('Hello world!', $resolved);
+    }
+
+    public function test_it_can_bind_with_a_closure()
+    {
+        $container = new Container();
+
+        $container->bind(_UnresolvableParameters::class, function (Container $container) {
+            return new _UnresolvableParameters(15);
+        });
+
+        $this->assertInstanceOf(
+            _UnresolvableParameters::class,
+            $container->resolve(_UnresolvableParameters::class)
+        );
+    }
+
+    public function test_it_can_bind_a_singleton()
+    {
+        $container = new Container();
+
+        $container->singleton(_WithUniqueIDInConstructor::class, function () {
+            return new _WithUniqueIDInConstructor();
+        });
+
+        $id = $container->resolve(_WithUniqueIDInConstructor::class);
+        $id2 = $container->resolve(_WithUniqueIDInConstructor::class);
+
+        $this->assertEquals($id, $id2);
     }
 }
 
@@ -177,11 +207,22 @@ class _DependencyInMethod
     }
 }
 
-class _UnresolvableParameters {
+class _UnresolvableParameters
+{
     private int $lamatitude;
 
     public function __construct(int $lamatitude)
     {
         $this->lamatitude = $lamatitude;
+    }
+}
+
+class _WithUniqueIDInConstructor
+{
+    public $id;
+
+    public function __construct()
+    {
+        $this->id = uniqid();
     }
 }

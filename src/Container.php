@@ -18,13 +18,28 @@ class Container
     private array $bindings = [];
 
     /**
+     * @var mixed[]
+     */
+    private array $singletons = [];
+
+    /**
      * @param string $id
      * @return mixed|object
      */
     public function resolve(string $id)
     {
+        if ($this->singletonBound($id)) {
+            return $this->singletons[$id];
+        }
+
         if ($this->bound($id)) {
-            return $this->bindings[$id];
+            $binding = $this->bindings[$id];
+
+            if ($binding instanceof Closure) {
+                return $this->resolveClosure($binding);
+            }
+
+            return  $binding;
         }
 
         if (!class_exists($id)) {
@@ -121,5 +136,17 @@ class Container
                 $function->getName()
             );
         }, $function->getParameters());
+    }
+
+    private function singletonBound(string $id)
+    {
+        return array_key_exists($id, $this->singletons);
+    }
+
+    public function singleton(string $class, Closure $resolver)
+    {
+        $this->singletons[$class] = $this->resolveClosure($resolver);
+
+        return $this;
     }
 }
