@@ -1,7 +1,13 @@
 {
-    "name": "delightful/packaplate",
-    "description": "A starter for any framework agnostic library.",
-    "type": "project",
+    "name": "delights/box",
+    "description": "Box, a smart autowiring container for PHP.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Félix Dorn",
+            "email": "github@felixdorn.fr"
+        }
+    ],
     "require-dev": {
         "phpunit/phpunit": "^9.1",
         "phpstan/phpstan": "^0.12.19",
