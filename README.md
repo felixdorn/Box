@@ -27,7 +27,7 @@ Or by adding a requirement in your `composer.json` :
 ```json
 {
   "require": {
-    "delights/box": "1.0.1"  
+    "delights/box": "0.2.0"  
   }
 }
 ```
