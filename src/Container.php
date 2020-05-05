@@ -13,11 +13,8 @@ use ReflectionParameter;
 
 class Container implements ContainerInterface
 {
-    use Psr11;
-    /**
-     * @var Container|null
-     */
-    private static ?Container $uniqueInstance = null;
+    use Psr11, Singleton;
+
     /**
      * @var mixed[]
      */
@@ -26,11 +23,6 @@ class Container implements ContainerInterface
      * @var mixed[]
      */
     private array $singletons = [];
-
-    public static function getInstance(): Container
-    {
-        return self::$uniqueInstance ?? new self;
-    }
 
     /**
      * @param string $id
