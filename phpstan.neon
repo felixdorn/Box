@@ -6,3 +6,7 @@ parameters:
     - tests/
   checkGenericClassInNonGenericObjectType: false
   inferPrivatePropertyTypeFromConstructor: true
+  ignoreErrors:
+    -
+      path: src/Container.php
+      message: '#Parameter \#1 \$function of method .+::makeMethodArguments\(\) expects ReflectionFunctionAbstract\, ReflectionMethod\|null given\.#'

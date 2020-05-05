@@ -13,7 +13,7 @@ use ReflectionParameter;
 
 class Container implements ContainerInterface
 {
-    use Psr11, Singleton;
+    use Psr11;
 
     /**
      * @var mixed[]
@@ -86,12 +86,8 @@ class Container implements ContainerInterface
      * @param mixed[] $with
      * @return mixed[]
      */
-    private function makeMethodArguments(?ReflectionFunctionAbstract $function, array $with = []): array
+    private function makeMethodArguments(ReflectionFunctionAbstract $function, array $with = []): array
     {
-        if ($function === null) {
-            return [];
-        }
-
         return array_map(function (ReflectionParameter $parameter) use ($function, $with) {
             if ($parameter->getClass() !== null) {
                 return $this->resolve($parameter->getClass()->getName());

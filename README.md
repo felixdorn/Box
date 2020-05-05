@@ -134,6 +134,39 @@ The order does not matter, in our example, it can be either `[x, y]` or `[y, x]`
 
 You can pass arbitrary parameters to any resolve function.
 
+## Singleton
+You may want to have a global Container that keeps the same bindings across your app.
+> Usually, you want to avoid this kind of behavior.
+
+```php
+use Delight\Box\PersistentContainer;
+
+PersistentContainer::getInstance();
+```
+Here, we this is the first time you call it, a new instance will be created.
+However, if you already created one, the same instance will be returned.
+
+### Clear the singleton
+You can clear the singleton and create a fresh one.
+```php
+use Delight\Box\PersistentContainer;
+
+PersistentContainer::clear()
+```
+
+### Static Proxies
+There is a little shortcut.
+```php
+use Delight\Box\PersistentContainer;
+
+// instead of this
+PersistentContainer::getInstance()->bind('some', 'thing');
+
+// you can do that
+PersistentContainer::bind('some', 'thing');
+```
+This is available for any of the `Container` public methods.
+
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
 
