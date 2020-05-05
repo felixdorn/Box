@@ -12,11 +12,13 @@ use PHPUnit\Framework\TestCase;
 
 class SingletonTest extends TestCase
 {
-    public function test_singleton_returns_an_instance_of_the_container() {
+    public function test_singleton_returns_an_instance_of_the_container()
+    {
         $this->assertInstanceOf(Container::class, Singleton::getInstance());
     }
 
-    public function test_cloning_throws_an_error() {
+    public function test_cloning_throws_an_error()
+    {
         $this->expectException(NotCloneableException::class);
         $this->expectWarningMessage("The container is not cloneable");
         $container = Container::getInstance();
