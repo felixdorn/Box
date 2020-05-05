@@ -179,7 +179,7 @@ class ContainerTest extends TestCase
         $this->expectExceptionMessage('Method some does not exist');
         $container->resolveMethod(_UnresolvableParameters::class, 'some');
     }
-    }
+}
 
 class _NoDependencies
 {
