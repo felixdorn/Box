@@ -138,6 +138,35 @@ class ContainerTest extends TestCase
 
         $this->assertEquals($id, $id2);
     }
+
+    public function test_it_can_resolve_arbitrary_parameters_works_in_constructor() {
+        $container = new Container;
+
+        $resolved = $container->resolve(_UnresolvableParameters::class, [
+            'lamatitude' => 14
+        ]);
+        $this->assertInstanceOf(_UnresolvableParameters::class, $resolved);
+        $this->assertEquals(14, $resolved->lamatitude);
+    }
+
+    public function test_it_can_resolve_arbitrary_parameters_works_in_closure() {
+        $container = new Container;
+
+        $resolver = $container->resolveClosure(function ($highest) {
+            return $highest;
+        }, ['highest' => 'yes']);
+        $this->assertEquals('yes', $resolver);
+    }
+
+    public function test_it_can_resolve_arbitrary_parameters_works_in_method() {
+        $container = new Container();
+
+        $resolver = $container->resolveMethod(_UnresolvableParametersInMethod::class, 'lama', [
+            'lamatitude' => 1e4
+        ]);
+
+        $this->assertEquals(1e4, $resolver);
+    }
 }
 
 class _NoDependencies
@@ -209,7 +238,7 @@ class _DependencyInMethod
 
 class _UnresolvableParameters
 {
-    private int $lamatitude;
+    public int $lamatitude;
 
     public function __construct(int $lamatitude)
     {
@@ -224,5 +253,16 @@ class _WithUniqueIDInConstructor
     public function __construct()
     {
         $this->id = uniqid();
+    }
+}
+
+
+class _UnresolvableParametersInMethod
+{
+    public int $lamatitude;
+
+    public function lama(int $lamatitude)
+    {
+        return $lamatitude;
     }
 }
