@@ -12,7 +12,8 @@ use PHPUnit\Framework\TestCase;
 
 class PersistentExceptionTest extends TestCase
 {
-    public function test_singleton_returns_an_instance_of_the_container() {
+    public function test_singleton_returns_an_instance_of_the_container()
+    {
         $this->assertInstanceOf(Container::class, PersistentContainer::getInstance());
     }
 
@@ -23,7 +24,8 @@ class PersistentExceptionTest extends TestCase
         $this->assertEquals('thing', PersistentContainer::getInstance()->resolve('some'));
     }
 
-    public function test_container_methods_are_available_statically_in_the_singleton() {
+    public function test_container_methods_are_available_statically_in_the_singleton()
+    {
         PersistentContainer::bind('some', 'thing');
         $this->assertEquals('thing', PersistentContainer::resolve('some'));
 
@@ -45,7 +47,8 @@ class PersistentExceptionTest extends TestCase
         );
     }
 
-    public function test_it_can_clear_the_container() {
+    public function test_it_can_clear_the_container()
+    {
         PersistentContainer::bind('some', 'value');
         $this->assertTrue(PersistentContainer::bound('some'));
         PersistentContainer::clear();

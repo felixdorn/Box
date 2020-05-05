@@ -171,7 +171,8 @@ class ContainerTest extends TestCase
         $this->assertEquals(1e4, $resolver);
     }
 
-    public function test_it_throws_an_error_when_methods_does_not_exists() {
+    public function test_it_throws_an_error_when_methods_does_not_exists()
+    {
         $container = new Container();
 
         $this->expectException(\ReflectionException::class);
