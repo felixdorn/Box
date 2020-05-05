@@ -13,12 +13,15 @@ use PhpParser\Node\Stmt\Continue_;
  * @method static mixed resolveClosure(\Closure $closure, array $with = [])
  * @method static Container singleton(string $class, \Closure $resolver)
  * @method static bool bound(string $id)
+ *
+ * @see Container
  */
 class PersistentContainer
 {
     private static ?Container $uniqueInstance = null;
 
     /**
+     * Proxy static calls to the container
      * @param string $name
      * @param mixed[] $arguments
      * @return mixed
@@ -28,6 +31,10 @@ class PersistentContainer
         return static::getInstance()->{$name}(...$arguments);
     }
 
+    /**
+     * Returns an instance of the Container or create one
+     * @return Container
+     */
     public static function getInstance(): Container
     {
         if (self::$uniqueInstance === null) {
@@ -37,6 +44,10 @@ class PersistentContainer
         return self::$uniqueInstance;
     }
 
+    /**
+     * Clears the container
+     * @return Container
+     */
     public static function clear(): Container
     {
         self::$uniqueInstance = new Container;

@@ -25,6 +25,8 @@ class Container implements ContainerInterface
     private array $singletons = [];
 
     /**
+     * Resolve an id using Reflection
+     * If a binding is found using the same id, then the actual binding will be returned
      * @param string $id
      * @param mixed[] $with
      * @return mixed|object
@@ -54,12 +56,18 @@ class Container implements ContainerInterface
         return $this->resolveMethod($id, '__construct', $with);
     }
 
+    /**
+     * Check if a singleton is bound for an id
+     * @param string $id
+     * @return bool
+     */
     private function singletonBound(string $id): bool
     {
         return array_key_exists($id, $this->singletons);
     }
 
     /**
+     * Check if a binding exists for an id
      * @param string $id
      * @return bool
      */
@@ -69,6 +77,7 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Resolves a closure, execute it, and returns the result
      * @param Closure $closure
      * @param mixed[] $with
      * @return mixed
@@ -82,6 +91,7 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Takes a function reflection and returns an array of resolved parameters
      * @param ReflectionFunctionAbstract $function
      * @param mixed[] $with
      * @return mixed[]
@@ -114,6 +124,7 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Resolve a method, execute it, and returns the result back
      * @param class-string $class
      * @param string $method
      * @param mixed[] $with
@@ -140,6 +151,7 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Bind an id to a value
      * @param string $id
      * @param mixed $value
      * @return $this
@@ -150,6 +162,12 @@ class Container implements ContainerInterface
         return $this;
     }
 
+    /**
+     * Bind a singleton to an id
+     * @param string $class
+     * @param Closure $resolver
+     * @return $this
+     */
     public function singleton(string $class, Closure $resolver): self
     {
         $this->singletons[$class] = $this->resolveClosure($resolver);
