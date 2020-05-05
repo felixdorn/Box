@@ -3,7 +3,6 @@
 
 namespace Delight\Box\Tests;
 
-
 use Delight\Box\Container;
 use Delight\Box\Exceptions\NotCloneableException;
 use Delight\Box\PersistentContainer;
