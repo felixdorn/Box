@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Delight\Box\Tests;
 
 
 use Delight\Box\Container;
 use Delight\Box\Exceptions\NotCloneableException;
 use Delight\Box\Singleton;
-use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 
 class SingletonTest extends TestCase
@@ -22,7 +20,6 @@ class SingletonTest extends TestCase
         $this->expectException(NotCloneableException::class);
         $this->expectWarningMessage("The container is not cloneable");
         $container = Container::getInstance();
-
         clone $container;
     }
 
@@ -32,5 +29,4 @@ class SingletonTest extends TestCase
 
         $this->assertEquals('thing', Container::getInstance()->resolve('some'));
     }
-
 }
