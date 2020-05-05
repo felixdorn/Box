@@ -139,7 +139,8 @@ class ContainerTest extends TestCase
         $this->assertEquals($id, $id2);
     }
 
-    public function test_singleton_works_as_expected() {
+    public function test_singleton_works_as_expected()
+    {
         Container::getInstance()->bind('some', 'thing');
 
         $this->assertEquals('thing', Container::getInstance()->resolve('some'));
