@@ -32,4 +32,5 @@ class SingletonTest extends TestCase
 
         $this->assertEquals('thing', Container::getInstance()->resolve('some'));
     }
+
 }
