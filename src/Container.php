@@ -101,7 +101,7 @@ class Container implements ContainerInterface
                 return $parameter->getDefaultValue();
             }
 
-            if (in_array($parameter->getName(), $with)) {
+            if (array_key_exists($function->getName(), $with)) {
                 return $with[$parameter->getName()];
             }
 
