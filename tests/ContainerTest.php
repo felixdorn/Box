@@ -139,7 +139,8 @@ class ContainerTest extends TestCase
         $this->assertEquals($id, $id2);
     }
 
-    public function test_it_can_resolve_arbitrary_parameters_works_in_constructor() {
+    public function test_it_can_resolve_arbitrary_parameters_works_in_constructor()
+    {
         $container = new Container;
 
         $resolved = $container->resolve(_UnresolvableParameters::class, [
@@ -149,7 +150,8 @@ class ContainerTest extends TestCase
         $this->assertEquals(14, $resolved->lamatitude);
     }
 
-    public function test_it_can_resolve_arbitrary_parameters_works_in_closure() {
+    public function test_it_can_resolve_arbitrary_parameters_works_in_closure()
+    {
         $container = new Container;
 
         $resolver = $container->resolveClosure(function ($highest) {
@@ -158,7 +160,8 @@ class ContainerTest extends TestCase
         $this->assertEquals('yes', $resolver);
     }
 
-    public function test_it_can_resolve_arbitrary_parameters_works_in_method() {
+    public function test_it_can_resolve_arbitrary_parameters_works_in_method()
+    {
         $container = new Container();
 
         $resolver = $container->resolveMethod(_UnresolvableParametersInMethod::class, 'lama', [
