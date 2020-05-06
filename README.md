@@ -146,13 +146,6 @@ PersistentContainer::getInstance();
 Here, we this is the first time you call it, a new instance will be created.
 However, if you already created one, the same instance will be returned.
 
-### Clear the singleton
-You can clear the singleton and create a fresh one.
-```php
-use Delight\Box\PersistentContainer;
-
-PersistentContainer::clear()
-```
 
 ### Static Proxies
 There is a little shortcut.

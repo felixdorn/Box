@@ -9,7 +9,7 @@ use Delight\Box\PersistentContainer;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 
-class PersistentExceptionTest extends TestCase
+class PersistentContainerTest extends TestCase
 {
     public function test_singleton_returns_an_instance_of_the_container()
     {
@@ -44,13 +44,5 @@ class PersistentExceptionTest extends TestCase
             12,
             PersistentContainer::resolveMethod(_UnresolvableParametersInMethod::class, 'lama', ['lamatitude' => 12])
         );
-    }
-
-    public function test_it_can_clear_the_container()
-    {
-        PersistentContainer::bind('some', 'value');
-        $this->assertTrue(PersistentContainer::bound('some'));
-        PersistentContainer::clear();
-        $this->assertFalse(PersistentContainer::bound('some'));
     }
 }

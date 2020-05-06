@@ -61,7 +61,7 @@ class Container implements ContainerInterface
      * @param string $id
      * @return bool
      */
-    private function singletonBound(string $id): bool
+    public function singletonBound(string $id): bool
     {
         return array_key_exists($id, $this->singletons);
     }
