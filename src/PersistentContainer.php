@@ -10,6 +10,7 @@ use Delight\Singleton\Singleton;
  * @method static mixed resolveClosure(\Closure $closure, array $with = [])
  * @method static mixed resolveMethod(string $class, string $method, array $with = [])
  * @method static Container bind(string $id, $value)
+ * @method static Container singleton(string $id, \Closure $closure)
  * @method static bool bound(string $id)
  * @method static bool singletonBound(string $id)
  *

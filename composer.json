@@ -19,7 +19,8 @@
     "autoload": {
         "psr-4": {
             "Delight\\Box\\": "src/"
-        }
+        },
+        "files": ["src/functions.php"]
     },
     "autoload-dev": {
         "classmap": ["tests/"]

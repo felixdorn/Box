@@ -4,10 +4,16 @@
 namespace Delight\Box\Tests;
 
 use Delight\Box\Container;
-use Delight\Box\Exceptions\NotCloneableException;
 use Delight\Box\PersistentContainer;
-use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
+use function Delight\Box\bind;
+use function Delight\Box\box;
+use function Delight\Box\resolve;
+use function Delight\Box\bound;
+use function Delight\Box\resolveClosure;
+use function Delight\Box\resolveMethod;
+use function Delight\Box\singleton;
+use function Delight\Box\singletonBound;
 
 class PersistentContainerTest extends TestCase
 {
@@ -44,5 +50,36 @@ class PersistentContainerTest extends TestCase
             12,
             PersistentContainer::resolveMethod(_UnresolvableParametersInMethod::class, 'lama', ['lamatitude' => 12])
         );
+    }
+
+    public function test_functions_exists() {
+        $this->assertTrue(function_exists('\Delight\Box\box'));
+        $this->assertTrue(function_exists('\Delight\Box\bind'));
+        $this->assertTrue(function_exists('\Delight\Box\bound'));
+        $this->assertTrue(function_exists('\Delight\Box\singleton'));
+        $this->assertTrue(function_exists('\Delight\Box\singletonBound'));
+        $this->assertTrue(function_exists('\Delight\Box\resolve'));
+        $this->assertTrue(function_exists('\Delight\Box\resolveMethod'));
+        $this->assertTrue(function_exists('\Delight\Box\resolveClosure'));
+    }
+
+    public function test_functions_works() {
+        $this->assertInstanceOf(Container::class, box());
+        bind('some', 'value');
+        $this->assertEquals('value', resolve('some'));
+        $this->assertTrue(bound('some'));
+        $this->assertFalse(bound('some_other_thing'));
+
+        singleton('this', function () {
+            return 'that';
+        });
+        $this->assertTrue(singletonBound('this'));
+        $this->assertFalse(singletonBound('that'));
+
+        $this->assertEquals('Hi!', resolveMethod(_DependencyInMethod::class, 'withResolvableDependency'));
+
+        $this->assertEquals('hi', resolveClosure(function () {
+            return 'hi';
+        }));
     }
 }

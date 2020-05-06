@@ -157,8 +157,11 @@ PersistentContainer::getInstance()->bind('some', 'thing');
 
 // you can do that
 PersistentContainer::bind('some', 'thing');
+
+// or even
+\Delight\Box\bind('some', 'thing')
 ```
-This is available for any of the `Container` public methods.
+This is available for any of the `PersistentContainer` public methods.
 
 ## Security 
 If you discover any security related issues, please email oss@dorns.fr instead of using the issue tracker.
