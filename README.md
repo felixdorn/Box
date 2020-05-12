@@ -158,8 +158,6 @@ PersistentContainer::getInstance()->bind('some', 'thing');
 // you can do that
 PersistentContainer::bind('some', 'thing');
 
-// or even
-\Delight\Box\bind('some', 'thing')
 ```
 This is available for any of the `PersistentContainer` public methods.
 

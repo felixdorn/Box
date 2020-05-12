@@ -51,35 +51,4 @@ class PersistentContainerTest extends TestCase
             PersistentContainer::resolveMethod(_UnresolvableParametersInMethod::class, 'lama', ['lamatitude' => 12])
         );
     }
-
-    public function test_functions_exists() {
-        $this->assertTrue(function_exists('\Delight\Box\box'));
-        $this->assertTrue(function_exists('\Delight\Box\bind'));
-        $this->assertTrue(function_exists('\Delight\Box\bound'));
-        $this->assertTrue(function_exists('\Delight\Box\singleton'));
-        $this->assertTrue(function_exists('\Delight\Box\singletonBound'));
-        $this->assertTrue(function_exists('\Delight\Box\resolve'));
-        $this->assertTrue(function_exists('\Delight\Box\resolveMethod'));
-        $this->assertTrue(function_exists('\Delight\Box\resolveClosure'));
-    }
-
-    public function test_functions_works() {
-        $this->assertInstanceOf(Container::class, box());
-        bind('some', 'value');
-        $this->assertEquals('value', resolve('some'));
-        $this->assertTrue(bound('some'));
-        $this->assertFalse(bound('some_other_thing'));
-
-        singleton('this', function () {
-            return 'that';
-        });
-        $this->assertTrue(singletonBound('this'));
-        $this->assertFalse(singletonBound('that'));
-
-        $this->assertEquals('Hi!', resolveMethod(_DependencyInMethod::class, 'withResolvableDependency'));
-
-        $this->assertEquals('hi', resolveClosure(function () {
-            return 'hi';
-        }));
-    }
 }
