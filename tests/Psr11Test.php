@@ -1,8 +1,8 @@
 <?php
 
-namespace Delight\Box\Tests;
+namespace Delights\Box\Tests;
 
-use Delight\Box\Container;
+use Delights\Box\Container;
 use PHPUnit\Framework\TestCase;
 
 class Psr11Test extends TestCase

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Delight\Box\Exceptions;
+namespace Delights\Box\Exceptions;
 
 use Psr\Container\ContainerExceptionInterface;
 

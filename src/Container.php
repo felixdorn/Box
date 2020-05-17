@@ -1,9 +1,9 @@
 <?php
 
-namespace Delight\Box;
+namespace Delights\Box;
 
 use Closure;
-use Delight\Box\Exceptions\DependencyInjectionException;
+use Delights\Box\Exceptions\DependencyInjectionException;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;

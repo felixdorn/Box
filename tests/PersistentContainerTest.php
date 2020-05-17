@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Delight\Box\Tests;
+namespace Delights\Box\Tests;
 
-use Delight\Box\Container;
-use Delight\Box\PersistentContainer;
+use Delights\Box\Container;
+use Delights\Box\PersistentContainer;
 use PHPUnit\Framework\TestCase;
 use function Delight\Box\bind;
 use function Delight\Box\box;

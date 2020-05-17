@@ -35,7 +35,7 @@ Don't forget to run `composer install` after adding the requirement.
 
 Before diving into the autowiring and stuff, we need to create a container instance.
 ```php
-use Delight\Box\Container;
+use Delights\Box\Container;
 
 $container = new Container();
 ```
@@ -71,7 +71,7 @@ We even support resolving properties if there is an annotation .
 Autowiring allows the container to auto-magically resolve dependencies using the Reflection API.
 
 ```php
-use Delight\Box\Container;
+use Delights\Box\Container;
 $container = new Container();
 
 class SomeClass {}
@@ -139,7 +139,7 @@ You may want to have a global Container that keeps the same bindings across your
 > Usually, you want to avoid this kind of behavior.
 
 ```php
-use Delight\Box\PersistentContainer;
+use Delights\Box\PersistentContainer;
 
 PersistentContainer::getInstance();
 ```
@@ -150,7 +150,7 @@ However, if you already created one, the same instance will be returned.
 ### Static Proxies
 There is a little shortcut.
 ```php
-use Delight\Box\PersistentContainer;
+use Delights\Box\PersistentContainer;
 
 // instead of this
 PersistentContainer::getInstance()->bind('some', 'thing');

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Delight\Box;
+namespace Delights\Box;
 
 use Delight\Singleton\Singleton;
 

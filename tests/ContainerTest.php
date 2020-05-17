@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Delight\Box\Tests;
+namespace Delights\Box\Tests;
 
-use Delight\Box\Container;
-use Delight\Box\Exceptions\DependencyInjectionException;
+use Delights\Box\Container;
+use Delights\Box\Exceptions\DependencyInjectionException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

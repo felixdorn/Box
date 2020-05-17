@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Delight\Box;
+namespace Delights\Box;
 
 trait Psr11
 {
