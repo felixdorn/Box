@@ -310,10 +310,8 @@ class _UnresolvableParametersInMethod
 
 interface _SomeInterface
 {
-
 }
 
 class _ImplementingSomeInterface implements _SomeInterface
 {
-
 }
