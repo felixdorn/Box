@@ -179,6 +179,35 @@ class ContainerTest extends TestCase
         $this->expectExceptionMessage('Method some does not exist');
         $container->resolveMethod(_UnresolvableParameters::class, 'some');
     }
+
+    public function test_it_can_bind_an_interface_to_an_implementation()
+    {
+        $container = new Container();
+
+        $container->bindToImplementation(_SomeInterface::class, _ImplementingSomeInterface::class);
+        $this->assertInstanceOf(_ImplementingSomeInterface::class, $container->resolve(_SomeInterface::class));
+        $this->assertInstanceOf(
+            _ImplementingSomeInterface::class,
+            $container->resolve(_ImplementingSomeInterface::class)
+        );
+
+        $container->bindToImplementation(_SomeInterface::class, new _ImplementingSomeInterface());
+        $this->assertInstanceOf(_ImplementingSomeInterface::class, $container->resolve(_SomeInterface::class));
+        $this->assertInstanceOf(
+            _ImplementingSomeInterface::class,
+            $container->resolve(_ImplementingSomeInterface::class)
+        );
+
+
+        $container->bindToImplementation(_SomeInterface::class, function () {
+            return new _ImplementingSomeInterface();
+        });
+        $this->assertInstanceOf(_ImplementingSomeInterface::class, $container->resolve(_SomeInterface::class));
+        $this->assertInstanceOf(
+            _ImplementingSomeInterface::class,
+            $container->resolve(_ImplementingSomeInterface::class)
+        );
+    }
 }
 
 class _NoDependencies
@@ -277,4 +306,14 @@ class _UnresolvableParametersInMethod
     {
         return $lamatitude;
     }
+}
+
+interface _SomeInterface
+{
+
+}
+
+class _ImplementingSomeInterface implements _SomeInterface
+{
+
 }

@@ -63,6 +63,19 @@ $container->singleton(Connection::class, function () {
 ```
 Now, the `Connection` class will be instantiated once, and the closure never executed again. 
 
+You may want to use an interface for your `Crawler` so you can easily swap instances and stuff. However, you want to retrieve the `Crawler` instance when `CrawlerInterface` is needed.
+Instead of manually bind these classes, you can use the `bindToImplementation` method.
+
+```php
+$container->bindToImplementation(CrawlerInterface::class, Crawler::class);
+// same as
+$container->bindToImplementation(CrawlerInterface::class, new Crawler);
+// same as
+$container->bindToImplementation(CrawlerInterface::class, function () {
+    return new Crawler;
+});
+```
+
 ## Resolving
 Smartly resolving parameters is the primary goal of this package. You can resolve anything that needs parameter including, constructors, closures, methods, functions.
 We even support resolving properties if there is an annotation .

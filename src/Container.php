@@ -174,4 +174,31 @@ class Container implements ContainerInterface
 
         return $this;
     }
+
+    /**
+     * Binds an interface to an implementation
+     * If the implementation is a
+     * For a given Interface and a given Implementation
+     * We bind Interface -> Implementation
+     * And Implementation::class -> Implementation
+     * @param string $interface
+     * @param string|object|Closure $implementation
+     * @return $this
+     */
+    public function bindToImplementation(string $interface, $implementation): Container
+    {
+        if (is_string($implementation)) {
+            $implementation = $this->resolve($implementation);
+        }
+
+        if ($implementation instanceof Closure) {
+            $implementation = $this->resolveClosure($implementation);
+        }
+
+        $this->bind($interface, $implementation);
+        $this->bind(get_class($implementation), $implementation);
+
+        return $this;
+    }
+
 }
