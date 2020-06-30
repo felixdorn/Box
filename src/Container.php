@@ -41,7 +41,7 @@ class Container implements ContainerInterface
             $binding = $this->bindings[$id];
 
             if ($binding instanceof Closure) {
-                return $this->resolveClosure($binding, $with);
+                return $this->closure($binding, $with);
             }
 
             return $binding;
@@ -53,7 +53,7 @@ class Container implements ContainerInterface
             );
         }
 
-        return $this->resolveMethod($id, '__construct', $with);
+        return $this->call($id, '__construct', $with);
     }
 
     /**
@@ -82,7 +82,7 @@ class Container implements ContainerInterface
      * @param mixed[] $with
      * @return mixed
      */
-    public function resolveClosure(Closure $closure, array $with = [])
+    public function closure(Closure $closure, array $with = [])
     {
         return call_user_func_array($closure, $this->makeMethodArguments(
             new ReflectionFunction($closure),
@@ -130,7 +130,7 @@ class Container implements ContainerInterface
      * @param mixed[] $with
      * @return mixed|object
      */
-    public function resolveMethod(string $class, string $method, array $with = [])
+    public function call(string $class, string $method, array $with = [])
     {
         $ref = new ReflectionClass($class);
 
@@ -170,7 +170,7 @@ class Container implements ContainerInterface
      */
     public function singleton(string $class, Closure $resolver): self
     {
-        $this->singletons[$class] = $this->resolveClosure($resolver);
+        $this->singletons[$class] = $this->closure($resolver);
 
         return $this;
     }
@@ -192,7 +192,7 @@ class Container implements ContainerInterface
         }
 
         if ($implementation instanceof Closure) {
-            $implementation = $this->resolveClosure($implementation);
+            $implementation = $this->closure($implementation);
         }
 
         $this->bind($interface, $implementation);

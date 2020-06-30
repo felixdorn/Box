@@ -116,12 +116,12 @@ class PostController {
     }
 }
 
-$container->resolveMethod(PostController::class, 'index');
+$container->call(PostController::class, 'index');
 // This returns |'My article']
 ```
 ### Resolving a Closure
 ```php
-$container->resolveClosure(function (SomeClass $class) {
+$container->closure(function (SomeClass $class) {
     return $class instanceof SomeClass;
 }); // returns true
 ```

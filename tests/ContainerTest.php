@@ -67,7 +67,7 @@ class ContainerTest extends TestCase
     public function test_it_resolve_dependency_in_method()
     {
         $container = new Container();
-        $resolved = $container->resolveMethod(_DependencyInMethod::class, 'withResolvableDependency');
+        $resolved = $container->call(_DependencyInMethod::class, 'withResolvableDependency');
 
         $this->assertEquals('Hi!', $resolved);
     }
@@ -80,7 +80,7 @@ class ContainerTest extends TestCase
             ->method('resolve')
             ->willReturn(new _DependencyInMethod(), new _NoDependencies());
 
-        $resolved = $container->resolveMethod(_DependencyInMethod::class, 'withResolvableDependency');
+        $resolved = $container->call(_DependencyInMethod::class, 'withResolvableDependency');
         $this->assertEquals('Hi!', $resolved);
     }
 
@@ -104,7 +104,7 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $resolved = $container->resolveClosure(function (_NoDependencies $noDep, _ResolvableDependencies $resDep) {
+        $resolved = $container->closure(function (_NoDependencies $noDep, _ResolvableDependencies $resDep) {
             return 'Hello world!';
         });
 
@@ -154,7 +154,7 @@ class ContainerTest extends TestCase
     {
         $container = new Container;
 
-        $resolver = $container->resolveClosure(function ($highest) {
+        $resolver = $container->closure(function ($highest) {
             return $highest;
         }, ['highest' => 'yes']);
         $this->assertEquals('yes', $resolver);
@@ -164,7 +164,7 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $resolver = $container->resolveMethod(_UnresolvableParametersInMethod::class, 'lama', [
+        $resolver = $container->call(_UnresolvableParametersInMethod::class, 'lama', [
             'lamatitude' => 1e4
         ]);
 
@@ -177,7 +177,7 @@ class ContainerTest extends TestCase
 
         $this->expectException(\ReflectionException::class);
         $this->expectExceptionMessage('Method some does not exist');
-        $container->resolveMethod(_UnresolvableParameters::class, 'some');
+        $container->call(_UnresolvableParameters::class, 'some');
     }
 
     public function test_it_can_bind_an_interface_to_an_implementation()
